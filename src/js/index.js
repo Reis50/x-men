@@ -1,50 +1,36 @@
-const personagens = document.querySelectorAll('.personagem');
+/* 
+  O que precisamos fazer? - quando clicar no botão do personagem na lista, temos que marcar o botão como selecionado e mostrar o personagem correspondente
 
+    OBJETIVO 1 - quando clicar no botão do personagem na lista, marcar o botao como selecionado 
+        passo 1 - pegar os botões no JS pra poder verificar quando o usuário clicar em cima de um deles
+        passo 2 - adicionar a classe "selecionado" no botão que o usuário clicou
+        passo 3 - verificar se já existe um botão selecionado, se sim, devemos remover a seleção dele 
 
-// passo 2 - adicionar a classe selecionado no personagem que o usuário passar o cursor do mouse
-personagens.forEach((personagem) => {
-    personagem.addEventListener('mouseenter', () => {
+	OBJETIVO 2 - quando clicar no botão do personagem mostrar as informações do personagem
+        passo 1 - pegar os personagens no JS pra poder mostrar ou esconder ele
+        passo 2 - adicionar a classe "selecionado" no personagem que o usuário selecionou
+        passo 3 - verificar se já existe um personagem selecionado, se sim, devemos remover a seleção dele 
+*/
 
-        if(window.innerWidth < 450) {
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        }
+const botoes = document.querySelectorAll(".botao");
+const personagens = document.querySelectorAll(".personagem");
 
-        // passo 3 - verificar se já existe um personagem selecionado, se sim, devemos remover a seleção dele
-        removerSelecaoDoPersonagem();
+botoes.forEach((botao, indice) => {
+	botao.addEventListener("click", () => {
+		desselecionarBotao();
+		desselecionarPersonagem();
 
-        personagem.classList.add('selecionado');
+		botao.classList.add("selecionado");
+		personagens[indice].classList.add("selecionado");
+	});
+});
 
-        // OBJETIVO 2 - quando passar o mouse em cima do personagem na listagem, trocar a imagem, o nome e a descrição do personagem grande
-        
-        //passo 1 - pegar o elemento do personagem grande pra adicionar as informações nele
-        alterarImagemPersonagemSelecionado(personagem);
-
-        // passo 3 - alterar o nome do personagem grande
-        alterarNomePersonagemSelecionado(personagem);
-
-        // passo 4 - alterar a descrição do personagem grande
-        alterarDescricaoPersonagem(personagem);
-    })
-})
-
-function alterarDescricaoPersonagem(personagem) {
-    const descricaoPersonagem = document.getElementById('descricao-personagem');
-    descricaoPersonagem.innerText = personagem.getAttribute('data-description');
+function desselecionarPersonagem() {
+	const personagemSelecionado = document.querySelector(".personagem.selecionado");
+	personagemSelecionado.classList.remove("selecionado");
 }
 
-function alterarNomePersonagemSelecionado(personagem) {
-    const nomePersonagem = document.getElementById('nome-personagem');
-    nomePersonagem.innerText = personagem.getAttribute('data-name');
-}
-
-function alterarImagemPersonagemSelecionado(personagem) {
-    const imagemPersonagemGrande = document.querySelector('.personagem-grande');
-    // passo 2 - alterar a imagem do personagem grande
-    const idPersonagem = personagem.attributes.id.value;
-    imagemPersonagemGrande.src = `./src/imagens/card-${idPersonagem}.png`;
-}
-
-function removerSelecaoDoPersonagem() {
-    const personagemSelecionado = document.querySelector('.selecionado');
-    personagemSelecionado.classList.remove('selecionado');
+function desselecionarBotao() {
+	const botaoSelecionado = document.querySelector(".botao.selecionado");
+	botaoSelecionado.classList.remove("selecionado");
 }
